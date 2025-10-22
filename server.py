@@ -32,13 +32,13 @@ def remove_client(client):
 def main():
   server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-  print("Iniciou o servidor de bate-papo")
+  print("Podem conversar")
 
   try:
       server.bind(("localhost", 7777))
       server.listen()
   except:
-      return print('\nNão foi possível iniciar o servidor!\n')
+      return print('\nNão foi possível iniciar o servidor!\n Dó, Ré, Mi, Fá, Sol.amento')
 
   while True:
       client, addr = server.accept()
