@@ -38,12 +38,12 @@ def main():
       server.bind(("localhost", 7777))
       server.listen()
   except:
-      return print('\nNão foi possível iniciar o servidor!\n')
+      return print('\nNão conseguimos a conexão com o servidor do bozo!\n')
 
   while True:
       client, addr = server.accept()
       clients.append(client)
-      print(f'Cliente conectado com sucesso. IP: {addr}')
+      print(f'Cliente conectado com sucesso meu patrão. IP: {addr}')
 
       # Inicia uma nova thread para lidar com as mensagens do cliente
       thread = threading.Thread(target=handle_client, args=(client,))
