@@ -18,8 +18,7 @@ def main():
 
   # Solicita ao usuário inserir um nome de usuário
   username = input('Usuário> ')
-  print('\nConectado')
-
+  print('\nSeja Bem Vindo! \n Você está conectado')
 
   # Cria duas threads para lidar com a recepção e envio de mensagens simultaneamente
   thread1 = threading.Thread(target=receiveMessages, args=[client])
