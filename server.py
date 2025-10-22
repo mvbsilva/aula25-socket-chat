@@ -32,7 +32,7 @@ def remove_client(client):
 def main():
   server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-  print("Iniciou o servidor de bate-papo")
+  print("Iniciou o chat, lindo(a)")
 
   try:
       server.bind(("localhost", 7777))
@@ -43,7 +43,7 @@ def main():
   while True:
       client, addr = server.accept()
       clients.append(client)
-      print(f'Cliente conectado com sucesso. IP: {addr}')
+      print(f'Cliente ON com sucesso. IP: {addr}')
 
       # Inicia uma nova thread para lidar com as mensagens do cliente
       thread = threading.Thread(target=handle_client, args=(client,))
