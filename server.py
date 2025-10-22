@@ -38,7 +38,7 @@ def main():
       server.bind(("localhost", 7777))
       server.listen()
   except:
-      return print('\nNão foi possível iniciar o servidor!\n')
+      return print('\nNão foi possível começar o chat!\n')
 
   while True:
       client, addr = server.accept()
