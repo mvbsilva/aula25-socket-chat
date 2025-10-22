@@ -13,7 +13,7 @@ def main():
       client.connect(('localhost', 7777))
   except:
       # Se não conseguir se conectar, exibe uma mensagem e encerra o programa
-      return print('\nNão foi possível se conectar ao servidor!\n')
+      return print('\nNão foi possível conectar ao servidor!\n')
 
 
   # Solicita ao usuário inserir um nome de usuário
