@@ -38,7 +38,7 @@ def receiveMessages(client):
           # Recebe uma mensagem codificada em UTF-8 e a decodifica
           msg = client.recv(2048).decode('utf-8')
           # Exibe a mensagem recebida
-          print(msg+'\n')
+          print(msg+'\n o ser humano é imundo')
       except:
           # Se houver um erro ao receber mensagens, exibe uma mensagem e encerra a conexão
           print('\nNão foi possível permanecer conectado no servidor!\n')
