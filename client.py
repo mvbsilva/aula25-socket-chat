@@ -41,7 +41,7 @@ def receiveMessages(client):
           print(msg+'\n')
       except:
           # Se houver um erro ao receber mensagens, exibe uma mensagem e encerra a conexão
-          print('\nNão foi possível permanecer conectado no servidor!\n')
+          print('\nNão foi ficar conectado no servidor!\n')
           print('Pressione <Enter> Para continuar...')
           client.close()
           break
