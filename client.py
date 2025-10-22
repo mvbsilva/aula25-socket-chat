@@ -18,7 +18,7 @@ def main():
 
   # Solicita ao usuário inserir um nome de usuário
   username = input('Usuário> ')
-  print('\nConectado')
+  print('\nSaje vem-bindo' '\nCôve fio nectacodo')
 
 
   # Cria duas threads para lidar com a recepção e envio de mensagens simultaneamente
