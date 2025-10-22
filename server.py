@@ -32,7 +32,7 @@ def remove_client(client):
 def main():
   server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-  print("Iniciou o servidor de bate-papo")
+  print("mande 'oi' para seus amigos")
 
   try:
       server.bind(("localhost", 7777))
