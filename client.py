@@ -13,12 +13,12 @@ def main():
       client.connect(('localhost', 7777))
   except:
       # Se não conseguir se conectar, exibe uma mensagem e encerra o programa
-      return print('\nNão foi possível se conectar ao servidor!\n')
+      return print('\nNão foi possível conectar ao servidor!\n')
 
 
   # Solicita ao usuário inserir um nome de usuário
   username = input('Usuário> ')
-  print('\nConectado')
+  print('\nSaje vem-bindo' '\nCôve fio nectacode')
 
 
   # Cria duas threads para lidar com a recepção e envio de mensagens simultaneamente
@@ -41,8 +41,10 @@ def receiveMessages(client):
           print(msg+'\n')
       except:
           # Se houver um erro ao receber mensagens, exibe uma mensagem e encerra a conexão
-          print('\nNão foi possível permanecer conectado no servidor!\n')
+          print('\nNão foi possível se conectar, seu ruim\n')
           print('Pressione <Enter> Para continuar...')
+          print('tá leno, é?')
+
           client.close()
           break
 
