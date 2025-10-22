@@ -43,7 +43,7 @@ def main():
   while True:
       client, addr = server.accept()
       clients.append(client)
-      print(f'Cliente conectado com sucesso. IP: {addr}')
+      print(f'O cliente foi inserido no chat. IP: {addr}')
 
       # Inicia uma nova thread para lidar com as mensagens do cliente
       thread = threading.Thread(target=handle_client, args=(client,))
