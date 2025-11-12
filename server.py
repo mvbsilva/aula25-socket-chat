@@ -50,8 +50,9 @@ def broadcast(msg, sender):
 
 # Função para enviar a lista de usuários
 def send_user_list(client):
+   print("debug")
    users = '\n'.join(username_conection.keys())
-   client.send(users)
+   client.send(f'{users}'.encode('utf-8'))
    
 
 # Função para remover um cliente da lista

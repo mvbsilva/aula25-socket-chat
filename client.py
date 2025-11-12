@@ -10,7 +10,7 @@ def main():
 
   try:
       # Tenta se conectar ao servidor na porta 7777
-      client.connect(('localhost', 7777))
+      client.connect(('192.168.10.52', 7777))
   except:
       # Se não conseguir se conectar, exibe uma mensagem e encerra o programa
       return print('\nNão foi possível se conectar ao servidor!\n')
