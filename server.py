@@ -4,17 +4,34 @@ import socket
 
 # Lista de clientes conectados ao servidor
 clients = []
+username_conection = {}
 
 # Função para lidar com as mensagens de um cliente
 def handle_client(client):
+  usr = client.recv(2048).decode('utf-8')
+  username = usr.strip('$')
+  username_conection[username] = client
+  print('Novo usuário: ', username)
   while True:
       try:
-          msg = client.recv(2048)
-          broadcast(msg, client)
+          msg = client.recv(2048).decode('utf-8')
+          src, msg = msg.split('=>')
+          dst, msg = msg.split(':')
+          print(src, dst, msg)
+          send_to_user(src, dst, msg, client)
       except:
           remove_client(client)
           break
 
+# Função para transmitir mensagens para todos os clientes
+def send_to_user(src, dst, msg, sender):
+  if(dst in username_conection.keys()):
+    dst_conn = username_conection[dst]
+    try:
+      dst_conn.send(f'<{src}> {msg}'.encode('utf-8'))
+    except:
+      pass
+  
 # Função para transmitir mensagens para todos os clientes
 def broadcast(msg, sender):
   for client in clients:
@@ -35,7 +52,7 @@ def main():
   print("Iniciou o servidor de bate-papo")
 
   try:
-      server.bind(("localhost", 7777))
+      server.bind(("0.0.0.0", 7777))
       server.listen()
   except:
       return print('\nNão foi possível iniciar o servidor!\n')

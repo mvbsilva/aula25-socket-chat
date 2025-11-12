@@ -48,6 +48,8 @@ def receiveMessages(client):
 
 
 def sendMessages(client, username):
+  # Registrando usuário no servidor
+  client.send(f'${username}$'.encode('utf-8'))
   # Loop para enviar mensagens para o servidor
   while True:
       try:
