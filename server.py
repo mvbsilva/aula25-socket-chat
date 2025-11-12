@@ -9,16 +9,23 @@ username_conection = {}
 # Função para lidar com as mensagens de um cliente
 def handle_client(client):
   usr = client.recv(2048).decode('utf-8')
-  username = usr.strip('$')
+  username = usr.strip('')
   username_conection[username] = client
   print('Novo usuário: ', username)
   while True:
       try:
           msg = client.recv(2048).decode('utf-8')
-          src, msg = msg.split('=>')
-          dst, msg = msg.split(':')
+          print(msg)
+          src, msg = msg.split('/')
+          dst, msg = msg.split(' ')
+          
           print(src, dst, msg)
-          send_to_user(src, dst, msg, client)
+          if dst == 'list':
+             send_user_list(client)
+          elif dst == 'all':
+            broadcast(msg, client)
+          else:
+            send_to_user(src, dst, msg, client)
       except:
           remove_client(client)
           break
@@ -40,6 +47,12 @@ def broadcast(msg, sender):
               client.send(msg)
           except:
               remove_client(client)
+
+# Função para enviar a lista de usuários
+def send_user_list(client):
+   users = '\n'.join(username_conection.keys())
+   client.send(users)
+   
 
 # Função para remover um cliente da lista
 def remove_client(client):

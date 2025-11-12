@@ -18,7 +18,11 @@ def main():
 
   # Solicita ao usuário inserir um nome de usuário
   username = input('Usuário> ')
+
+  client.send(f'{username}'.encode('utf-8'))
   print('\nConectado')
+
+
 
 
   # Cria duas threads para lidar com a recepção e envio de mensagens simultaneamente
@@ -42,21 +46,19 @@ def receiveMessages(client):
       except:
           # Se houver um erro ao receber mensagens, exibe uma mensagem e encerra a conexão
           print('\nNão foi possível permanecer conectado no servidor!\n')
-          print('Pressione <Enter> Para continuar.....')
+          print('Pressione <Enter> Para continuar...')
           client.close()
           break
 
 
 def sendMessages(client, username):
-  # Registrando usuário no servidor
-  client.send(f'${username}$'.encode('utf-8'))
   # Loop para enviar mensagens para o servidor
   while True:
       try:
           # Solicita ao usuário inserir uma mensagem
-          msg = input('\n')
+          msg = input('')
           # Envia a mensagem formatada com o nome de usuário ao servidor
-          client.send(f'<{username}> {msg}'.encode('utf-8'))
+          client.send(f'{username} {msg}'.encode('utf-8'))
       except:
           # Se houver um erro ao enviar mensagens, encerra a thread
           return
