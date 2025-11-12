@@ -42,12 +42,14 @@ def receiveMessages(client):
       except:
           # Se houver um erro ao receber mensagens, exibe uma mensagem e encerra a conexão
           print('\nNão foi possível permanecer conectado no servidor!\n')
-          print('Pressione <Enter> Para continuar...')
+          print('Pressione <Enter> Para continuar.....')
           client.close()
           break
 
 
 def sendMessages(client, username):
+  # Registrando usuário no servidor
+  client.send(f'${username}$'.encode('utf-8'))
   # Loop para enviar mensagens para o servidor
   while True:
       try:
