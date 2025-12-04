@@ -18,6 +18,9 @@ def handle_client(client):
         # Notifica o usuário sobre a conexão bem-sucedida
         client.send(f'Bem-vindo, {username}!\n'.encode('utf-8'))
         
+        # Notifica todos os outros usuários sobre a entrada
+        broadcast_system(f'*** {username} entrou no chat ***')
+        
         while True:
             try:
                 msg = client.recv(2048).decode('utf-8')
@@ -94,6 +97,15 @@ def broadcast(src, msg, sender):
     except:
         pass
 
+# Função para transmitir mensagens do sistema para todos
+def broadcast_system(msg):
+    formatted_msg = f'{msg}\n'.encode('utf-8')
+    for username, client in username_connection.items():
+        try:
+            client.send(formatted_msg)
+        except Exception as e:
+            print(f'Erro ao enviar mensagem do sistema para {username}: {e}')
+
 # Função para remover um cliente da lista
 def remove_client(client, username):
     try:
@@ -102,6 +114,8 @@ def remove_client(client, username):
         if username and username in username_connection:
             del username_connection[username]
             print(f'Usuário desconectado: {username}')
+            # Notifica todos sobre a saída
+            broadcast_system(f'*** {username} saiu do chat ***')
         client.close()
     except Exception as e:
         print(f'Erro ao remover cliente: {e}')
