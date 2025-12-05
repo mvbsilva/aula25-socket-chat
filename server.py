@@ -29,17 +29,29 @@ def handle_client(client):
                 
                 print(f'Mensagem recebida: {msg}')
                 
-                # Verifica se é mensagem privada (formato: remetente/destinatário mensagem)
-                if '/' in msg:
-                    # Parse da mensagem privada: remetente/destinatário mensagem
-                    parts = msg.split('/', 1)
-                    if len(parts) < 2:
+                # Parse inicial da mensagem
+                parts = msg.split(' ', 1)
+                if len(parts) < 2:
+                    continue
+                
+                src = parts[0].strip()
+                content = parts[1].strip()
+                
+                # Verifica se é comando /usuarios
+                if content == '/usuarios':
+                    print(f'Comando /usuarios recebido de {src}')
+                    send_user_list(client)
+                    continue
+                
+                # Verifica se é mensagem privada (contém destinatário/mensagem)
+                if '/' in msg and '/' in content:
+                    # É mensagem privada no formato: remetente/destinatário mensagem
+                    # Reprocessa a mensagem original
+                    private_parts = msg.split('/', 1)
+                    if len(private_parts) < 2:
                         continue
-                        
-                    src = parts[0].strip()
-                    rest = parts[1].strip()
                     
-                    # Separa destinatário e mensagem
+                    rest = private_parts[1].strip()
                     msg_parts = rest.split(' ', 1)
                     if len(msg_parts) < 2:
                         continue
@@ -50,23 +62,41 @@ def handle_client(client):
                     print(f'[PRIVADO] De: {src} | Para: {dst} | Mensagem: {message}')
                     send_to_user(src, dst, message, client)
                 else:
-                    # Mensagem broadcast (formato: remetente mensagem)
-                    msg_parts = msg.split(' ', 1)
-                    if len(msg_parts) < 2:
-                        continue
+                    # Mensagem broadcast
+                    print(f'[BROADCAST] De: {src} | Mensagem: {content}')
+                    broadcast(src, content, client)
                     
-                    src = msg_parts[0].strip()
-                    message = msg_parts[1].strip()
-                    
-                    print(f'[BROADCAST] De: {src} | Mensagem: {message}')
-                    broadcast(src, message, client)
             except Exception as e:
                 print(f'Erro ao processar mensagem: {e}')
+                import traceback
+                traceback.print_exc()
                 break
     except Exception as e:
         print(f'Erro na conexão com cliente: {e}')
     finally:
         remove_client(client, username)
+
+# Função para enviar a lista de usuários conectados
+def send_user_list(client):
+    try:
+        user_list = list(username_connection.keys())
+        total = len(user_list)
+        
+        print(f'Enviando lista de {total} usuários')
+        
+        if total == 0:
+            client.send('Nenhum usuário conectado.\n'.encode('utf-8'))
+        else:
+            msg = f'\n=== Usuários Online ({total}) ===\n'
+            for user in sorted(user_list):
+                msg += f'  • {user}\n'
+            msg += '========================\n'
+            print(f'Lista formatada: {msg}')
+            client.send(msg.encode('utf-8'))
+    except Exception as e:
+        print(f'Erro ao enviar lista de usuários: {e}')
+        import traceback
+        traceback.print_exc()
 
 # Função para enviar mensagem privada para um usuário específico
 def send_to_user(src, dst, msg, sender):
