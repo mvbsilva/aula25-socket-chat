@@ -53,15 +53,43 @@ def receiveMessages(client):
 
 def sendMessages(client, username):
   # Loop para enviar mensagens para o servidor
-  while True:
-      try:
-          # Solicita ao usuário inserir uma mensagem
-          msg = input('')
-          # Envia a mensagem formatada com o nome de usuário ao servidor
-          client.send(f'{username} {msg}'.encode('utf-8'))
-      except:
-          # Se houver um erro ao enviar mensagens, encerra a thread
-          return
+ def sendMessages(client, username):
+    while True:
+        try:
+            user_input = input('').strip()
+
+            if not user_input:
+                continue
+
+            if user_input.lower() == 'quit':
+                client.close()
+                break
+
+            # ✅ Mensagem privada: para:destino mensagem
+            if user_input.startswith('para:'):
+                try:
+                    header, message = user_input.split(' ', 1)
+                    dest = header.split(':', 1)[1]
+
+                    payload = f'{username}/{dest} {message}'
+                    client.send(payload.encode('utf-8'))
+                except ValueError:
+                    print("Uso correto: para:usuario mensagem")
+                continue
+
+            # ✅ Lista de usuários
+            if user_input == 'list':
+                payload = f'{username}/list '
+                client.send(payload.encode('utf-8'))
+                continue
+
+            # ✅ Broadcast padrão
+            payload = f'{username}/all {user_input}'
+            client.send(payload.encode('utf-8'))
+
+        except:
+            break
+
 
 
 # Chama a função main para iniciar o cliente
